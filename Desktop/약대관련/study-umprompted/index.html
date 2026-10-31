@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unprompted</title>
+
+  <!-- Inter 폰트 (오프라인이면 style.css의 시스템 폰트로 자동 대체) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== 상단 소개 ========== -->
+  <header class="hero">
+    <h1 class="wordmark">UNPROMPTED</h1>
+    <p class="tagline">
+      Explore unfamiliar ideas.<br>
+      Research them.<br>
+      Explain them.
+    </p>
+  </header>
+
+  <main class="layout">
+
+    <!-- ========== 왼쪽(메인) 컬럼 ========== -->
+    <div class="col-main">
+
+      <!-- 오늘의 주제 카드 (내용은 app.js가 채움) -->
+      <section class="card topic-card" aria-live="polite">
+        <!-- 카테고리 필터 칩 (app.js가 CATEGORIES로 생성) -->
+        <div class="chips" id="categoryChips" role="tablist" aria-label="Category"></div>
+
+        <p class="card-title">Today's Topic</p>
+        <h2 class="topic-korean" id="topicKorean"></h2>
+        <p class="topic-english" id="topicEnglish"></p>
+
+        <div class="topic-meta">
+          <span class="pill" id="topicCategory"></span>
+          <span class="stars" id="topicStars" aria-label="Difficulty"></span>
+        </div>
+
+        <div class="estimates">
+          <div class="estimate">
+            <span class="estimate-label">Estimated Research</span>
+            <span class="estimate-value" id="estResearch"></span>
+          </div>
+          <div class="estimate">
+            <span class="estimate-label">Estimated Explain</span>
+            <span class="estimate-value" id="estExplain"></span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="btnDraw">Draw Another Topic</button>
+          <button class="btn" id="btnCopyResearch">Copy Research Prompt</button>
+          <button class="btn" id="btnCopyEval">Copy Evaluation Prompt</button>
+          <button class="btn btn-primary" id="btnSave">Save</button>
+           <!--<button class="btn btn-save" id="btnSave">Save</button>-->
+          <span class="save-status" id="saveStatus" role="status"></span>
+        </div>
+      </section>
+
+      <!--
+        입력 카드 4개. textarea의 data-field 값이 저장 키가 됩니다.
+        필드를 더 추가하고 싶으면 카드 하나 복사해서 data-field만 바꾸면 자동 저장됨.
+      -->
+      <section class="card">
+        <header class="card-head">
+          <h3 class="card-title">Research Notes</h3>
+        </header>
+        <textarea data-field="notes" rows="10"
+          placeholder="Look it up with your own tools. Write what you find here."></textarea>
+      </section>
+
+      <section class="card">
+        <header class="card-head">
+          <h3 class="card-title">My Script</h3>
+        </header>
+        <textarea data-field="script" rows="10"
+          placeholder="Close your sources. Explain it in your own words."></textarea>
+      </section>
+
+      <section class="card">
+        <header class="card-head">
+          <h3 class="card-title">AI Feedback</h3>
+        </header>
+        <textarea data-field="feedback" rows="10"
+          placeholder="Paste the evaluation from your own AI here."></textarea>
+      </section>
+
+      <section class="card">
+        <header class="card-head">
+          <h3 class="card-title">Reflection</h3>
+        </header>
+        <ul class="reflect-hints">
+          <li>What surprised me?</li>
+          <li>What do I still not understand?</li>
+          <li>What should I review later?</li>
+        </ul>
+        <textarea data-field="reflection" rows="7"></textarea>
+      </section>
+    </div>
+
+    <!-- ========== 오른쪽 컬럼 ========== -->
+    <!-- ========== 오른쪽 컬럼 ========== -->
+    <aside class="col-side">
+
+      <!-- 타이머를 History보다 위로 -->
+      <section class="card">
+        <h3 class="card-title">Study Timers</h3>
+
+        <div class="timer" data-seconds="600" data-name="Research">
+          <p class="timer-name">Research</p>
+          <p class="timer-display">10:00</p>
+          <div class="timer-buttons">
+            <button class="btn btn-sm" data-act="start">Start</button>
+            <button class="btn btn-sm" data-act="pause">Pause</button>
+            <button class="btn btn-sm" data-act="reset">Reset</button>
+          </div>
+        </div>
+
+        <div class="timer" data-seconds="180" data-name="Explain">
+          <p class="timer-name">Explain</p>
+          <p class="timer-display">03:00</p>
+          <div class="timer-buttons">
+            <button class="btn btn-sm" data-act="start">Start</button>
+            <button class="btn btn-sm" data-act="pause">Pause</button>
+            <button class="btn btn-sm" data-act="reset">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- History를 아래로 -->
+      <section class="card">
+        <h3 class="card-title">Learning History</h3>
+        <button class="btn btn-sm" id="btnClearHistory">Clear</button>
+        <ul class="history" id="historyList"></ul>
+      </section>
+
+    </aside>
+  </main>
+
+  <!-- 복사/알림용 토스트 -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- topics.js가 먼저 로드되어야 app.js에서 TOPICS를 쓸 수 있음 -->
+  <script src="topics.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
